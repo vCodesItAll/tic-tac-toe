@@ -1,0 +1,4 @@
+![whiteboard pseudocode]()
+
+Objects
+- 
