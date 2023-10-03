@@ -6,9 +6,12 @@ init(event){
     // add properties to the gameState with values 
     // build ui
     buildUI();
+
+    // initialize  click handlers
+    setupHandlers();
 }
 
-// Below are functions with the R&R - MVC
+// Below are functions with the R&R (role and responsibilities) - MVC
 
 // Model - 
 function newGame(){
@@ -19,8 +22,11 @@ function newGame(){
     player1 = new Player();
     player2 = new Player();
     // check local storage
-    // if we have a game in ls
-    // hydrate state
+    // if (we have a game in ls)
+        // hydrate state
+        gameState = ls.state
+    else 
+        gameState = gameState.board.default
 }
 
 // Model functions
@@ -28,15 +34,29 @@ function newGame(){
     updateState({key:value});
     addMove({who:player1, where:square5});
     evalWinCondition()
+    updateView()
+
    
 */
 
 // View - 
 function buildUI(){
-
+    // do stuff with the UI, View
 }
 
+// View functions
+    buildTilesAndPieces()
+    buildTiles()
+    buildScoreboard()
+    buildControlBoard()
+
+
 // Controller - 
+function setupHandlers(){
+    // Tile clickhandler
+    // Scoreboard clickhandler (player, reset)
+    // 
+}
 function onMove (){
 makeBlock() // you have blocked other player from making 3 in a row
 
