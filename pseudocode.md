@@ -1,5 +1,7 @@
 ![whiteboard pseudocode](img/PXL_20231003_113437401.jpg)
 
+Data Structures -----------------------------
+
 Objects
 - game piece
     - which player (x or o, user or computer)
@@ -13,10 +15,11 @@ Objects
 Arrays
 - track all the different moves
 - tiles on board
+
 Methods
 - init - render board
 - drawGrid
-- 
+- .some() to know there are still moves so game shouldn't move
 
 MOSCOW in Eisenhower ---------------------
 
