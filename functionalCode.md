@@ -32,7 +32,12 @@ function newGame(){
 // Model functions
 /*
     updateState({key:value});
-    addMove({who:player1, where:square5});
+    addMove({
+        who:player1, 
+        what: x or o, 
+        where:tile5
+        }
+    );
     evalWinCondition()
     updateView()
 
