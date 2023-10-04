@@ -75,12 +75,13 @@ function renderBoard(){
     }
 }
 
-restartGame
-    // clear board
-    set board as fill method for board array with empty strings
-    set currentPlayer as "X"
-    set gameEnded as false
-    call renderBoard
+// Function to restart the game
+function restartGame() {
+    board = Array(BOARD_SIZE ** 2).fill(" "); // clear board
+    currentPlayer = "X"; // always start game with user as X
+    gameEnded = false; // reset game state to false
+    renderBoard();
+}
 
 //render board for the first time
-renderBoard
+renderBoard();
