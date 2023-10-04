@@ -41,11 +41,13 @@ function handleTileClick(index) {
     renderBoard(); // update the game board
 }
 
-displayResult(message)
-    init messageElement to create div in document
-    add class called message
-    set messageElement text content as message
-    appendChild messageElement to parent game
+// Function to display game result
+function displayResult(message) {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    messageElement.textContent = message;
+    game.appendChild(messageElement);
+}
 
 renderBoard
     set game.innerHTML to an empty string //clear the game board
