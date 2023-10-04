@@ -9,34 +9,37 @@ const WINNING_COMBINATIONS = [
 ];
 
 // Game state
+let board = Array(BOARD_SIZE ** 2).fill(" ") // Initialize empty board with 3^2 cells
+let currentPlayer = "X"; // X represents user symbol - always start with user move
+let gameEnded = false; // Allows game to play out
 
-declare board array
-declare current player
-init gameEnd as false
+// Function to check for a win
+function checkWin(player) {
+    // Check if ANY of the winning combinations is completed by all players
+    return WINNING_COMBINATIONS.some(combination => combination.every(index => board[index] === player));
+}
 
-let board = Array
+// Function to check for a tie
+function checkTie() {
+    // Check if all the cells are occupied (all are not empty)
+    return board.every(cell => cell !== " ");
+}
 
-FUNCTIONS
-checkWin
-    return winningCombinations do some method to check if it exists
-
-checkTie
-    return every method to check all cells are not empty
-
-handleTileClick(index)
-    if gameEnded and boardIndex do not equal empty return; // stops user from clicking if game is over or on any occupied tile
-
-    init boardIndex as currentPlayer
-
-    if checkWin(currentPlayer)
-        gameEnded is true // game ends because someone won
-        displayResult string literal currentPlayer wins
-    else if checkTie
-        gameEnded is true // game ended to tie
-        displayResult string It's a tie
-    else
-        currentPlayer = currentPlayer switch statement if they're not x, switch to o otherwise switch to x
-renderBoard
+// Function to handle tile click
+function handleTileClick(index) {
+    if (gameEnded || board[index] !== " ") return; // don't allow clicks if the game is over or if tile is filled
+    board[index] = currentPlayer; // place current player's symbol on the clicked index tile
+    if (checkWin(currentPlayer)) {
+        gameEnded = true; // game is over because someone has won
+        displayResult(`${currentPlayer} wins!`);
+    } else if (checkTie()) {
+        gameEnded = true; // game is over in a tie because there are no moves
+        displayResult("It's a tie!");
+    } else {
+        currentPlayer = currentPlayer === "X" ? "O" : "X"; //switch symbol for next player turn
+    }
+    renderBoard(); // update the game board
+}
 
 displayResult(message)
     init messageElement to create div in document
