@@ -49,27 +49,31 @@ function displayResult(message) {
     game.appendChild(messageElement);
 }
 
-renderBoard
-    set game.innerHTML to an empty string //clear the game board
-
+// Function to render the game board
+function renderBoard(){
+    game.innerHTML = " "; //clear the game board
     //build the tiles
-    for (iterate i from 0 to BOARDSIZE ^ 2, by 1)
-        init tile as create a div element
-        add classList name tile
-        init textContent as value of index in board[]
-        create click handler to tile object
-        append tile as child to game
+    for (let i = 0; i < BOARD_SIZE ** 2; i++) {
+        const tile = document.createElement('div');
+        tile.classList.add("tile");
+        tile.textContent = board[i];
+        tile.addEventListener("click", () => handleTileClick(i)); // attach click event listener
+        game.appendChild(tile);
 
-    //make new row after 3 tiles
-    if (index plus 1's mod of BOARDSIZE is equivalent to 0)
-        append a line break as a child element to game
+        //make new row after 3 tiles
+        if ((i+1) % BOARD_SIZE === 0) {
+            game.appendChild(document.createElement("br")); 
+        }
+    }
 
     //display whose turn it is
-    if gameEnded is false
-        create a div element called messageElement
-        add message to messageElement
-        add textContent string: It's stringliteral currentPlayer's turn
-        append the child of messageElement to game
+    if (!gameEnded) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.textContent = `It's ${currentPlayer}'s turn.`;
+        game.appendChild(messageElement);
+    }
+}
 
 restartGame
     // clear board
