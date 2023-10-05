@@ -38,13 +38,23 @@ function handleTileClick(index) {
     } else {
         currentPlayer = currentPlayer === "X" ? "O" : "X"; //switch symbol for next player turn
     }
+    saveGameToLocalStorage();
     renderBoard(); // update the game board
 }
 
 // Function to display game result
 function displayResult(message) {
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message");
+    const messageElement = gameContainer.querySelector(".message");
+  
+    // if messageBox doesn't exist create one
+    if (!messageElement) {
+        const newMessageElement = document.createElement("div");
+        newMessageElement.classList.add("message");
+        gameContainer.appendChild(newMessageElement);
+        messageElement = newMessageElement;
+    }
+    // update existing message in messageBox
+    messageElement.textContent = message;
 
     // make messageBox stay when game is over
     if (message === "It's a tie!") {
@@ -85,6 +95,28 @@ function renderBoard(){
     }
 
     gameContainer.appendChild(boardElement);
+}
+
+function saveGameToLocalStorage(){
+    const gameState = {
+        board,
+        currentPlayer,
+        gameEnded,
+    };
+    localStorage.setItem("ticTacToeGame", JSON.stringify(gameState));
+}
+
+function loadGameFromLocalStorage() {
+    const gameStateJSON = localStorage.getItem("ticTacToeGame");
+    if (gameStateJSON) {
+        const gameState = JSON.parse(gameStateJSON);
+        board = gameState.board;
+        currentPlayer = gameState.currentPlayer;
+        gameEnded = gameState.gameEnded;
+    }
+}
+
+loadGameFromLocalStorage();
 
     //display whose turn it is
     if (!gameEnded) {
@@ -93,7 +125,7 @@ function renderBoard(){
         messageElement.textContent = `It's ${currentPlayer}'s turn.`;
         gameContainer.appendChild(messageElement);
     }
-}
+
 
 // Function to restart the game
 function restartGame() {
