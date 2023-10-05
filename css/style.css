@@ -1,12 +1,17 @@
 .message {
     border: 3px solid red;
+    margin-top: 10px; 
+    font-size: 24px;
 }
 
 .tile {
     border: 3px solid red;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100px;
     height: 100px;
+    font-size: 36px;
 }
 
 /* center game container vertically */
