@@ -45,13 +45,27 @@ function handleTileClick(index) {
 function displayResult(message) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message");
-    messageElement.textContent = message;
+
+    // make messageBox stay when game is over
+    if (message === "It's a tie!") {
+        messageElement.textContent = message;
+    } else {
+        messageElement.textContent = `Winner: ${message}`;
+    }
+    
     gameContainer.appendChild(messageElement);
 }
 
 // Function to render the game board dynamically
 function renderBoard(){
-    gameContainer.innerHTML = " "; //clear the game board
+    const existingBoard = gameContainer.querySelector(".board"); //clear the game board
+    if (existingBoard) {
+        gameContainer.removeChild(existingBoard);
+    }
+
+    const boardElement = document.createElement("div");
+    boardElement.classList.add("board");
+
     for (let i = 0; i < BOARD_SIZE; i++) { // iterate rows
         const row = document.createElement('div'); // make row
         row.classList.add("row"); // add row class
@@ -61,15 +75,16 @@ function renderBoard(){
             const tile = document.createElement("div"); // make tile
             tile.classList.add("tile"); // add tile class
             const index = i * BOARD_SIZE + j; // multiplication indicates row and j chooses index in col
-        tile.textContent = board[i];
-        tile.addEventListener("click", () => handleTileClick(i)); // attach click event listener
-        gameContainer.appendChild(tile);
-
-        //make new row after 3 tiles
-        if ((i+1) % BOARD_SIZE === 0) {
-            gameContainer.appendChild(document.createElement("br")); 
+            tile.textContent = board[index];
+            tile.addEventListener("click", () => handleTileClick(index)); // attach click event listener
+            col.appendChild(tile);
+            row.appendChild(col);
         }
+        boardElement.appendChild(row);
+            
     }
+
+    gameContainer.appendChild(boardElement);
 
     //display whose turn it is
     if (!gameEnded) {
