@@ -1,6 +1,6 @@
 // Constants
 
-const game = document.getElementById('game'); //id of the one div
+const gameContainer = document.getElementById('game-container'); //id of the one div
 const BOARD_SIZE = 3; // 3x3
 const WINNING_COMBINATIONS = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
@@ -46,23 +46,28 @@ function displayResult(message) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message");
     messageElement.textContent = message;
-    game.appendChild(messageElement);
+    gameContainer.appendChild(messageElement);
 }
 
-// Function to render the game board
+// Function to render the game board dynamically
 function renderBoard(){
-    game.innerHTML = " "; //clear the game board
-    //build the tiles
-    for (let i = 0; i < BOARD_SIZE ** 2; i++) {
-        const tile = document.createElement('div');
-        tile.classList.add("tile");
+    gameContainer.innerHTML = " "; //clear the game board
+    for (let i = 0; i < BOARD_SIZE; i++) { // iterate rows
+        const row = document.createElement('div'); // make row
+        row.classList.add("row"); // add row class
+        for (let j = 0; j < BOARD_SIZE; j++){ // iterate cols
+            const col = document.createElement("div"); // make col
+            col.classList.add("col-4"); // add col class
+            const tile = document.createElement("div"); // make tile
+            tile.classList.add("tile"); // add tile class
+            const index = i * BOARD_SIZE + j; // multiplication indicates row and j chooses index in col
         tile.textContent = board[i];
         tile.addEventListener("click", () => handleTileClick(i)); // attach click event listener
-        game.appendChild(tile);
+        gameContainer.appendChild(tile);
 
         //make new row after 3 tiles
         if ((i+1) % BOARD_SIZE === 0) {
-            game.appendChild(document.createElement("br")); 
+            gameContainer.appendChild(document.createElement("br")); 
         }
     }
 
@@ -71,7 +76,7 @@ function renderBoard(){
         const messageElement = document.createElement("div");
         messageElement.classList.add("message");
         messageElement.textContent = `It's ${currentPlayer}'s turn.`;
-        game.appendChild(messageElement);
+        gameContainer.appendChild(messageElement);
     }
 }
 

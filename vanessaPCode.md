@@ -67,3 +67,21 @@ restartGame
 
 //render board for the first time
 renderBoard
+
+__________________________________________
+
+selecting index with 
+
+const index = i * BOARD_SIZE + j;
+
+this works as such: 
+
+i=0, j=0 -> index = 0
+i=0, j=1 -> index = 1
+i=0, j=2 -> index = 2
+i=1, j=0 -> index = 3
+i=1, j=1 -> index = 4
+i=1, j=2 -> index = 5
+i=2, j=0 -> index = 6
+i=2, j=1 -> index = 7
+i=2, j=2 -> index = 8
