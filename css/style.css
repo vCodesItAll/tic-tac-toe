@@ -1,7 +1,9 @@
 .message {
-    border: 3px solid red;
+    border: 2px solid red;
+    padding: 10px;
     margin-top: 10px; 
     font-size: 24px;
+    width:fit-content;
 }
 
 .tile {
@@ -21,4 +23,19 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+.custom-cursor {
+    cursor: url()
+}
+
+.score-history-container {
+    border: 2px solid red;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.btn-clear-score {
+    display: block;
+    margin-top: 10px;
 }
