@@ -55,7 +55,7 @@ function handleTileClick(index) {
 
 // Function to display game result
 function displayResult(message) {
-    const messageElement = document.querySelector(".message");
+    let messageElement = document.querySelector(".message");
   
     // if messageBox doesn't exist create one
     if (!messageElement) {
@@ -196,3 +196,131 @@ function updateScoreHistory() {
 updateScoreHistory();
 
 displayResult(`It's ${currentPlayer}'s turn.`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// spice
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function () {
+        // create a fullscreen overlay div
+        const overlay = document.createElement("div")
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.backgroundColor = "rga(255,255,255,0.8)";
+
+        const cuteImage = document.createElement("img");
+        cuteImage.src = "img/zombeavers.jpg";
+        cuteImage.style.width = "100%";
+        cuteImage.style.height = "100%";
+
+        // create sound
+        const cuteSound = new Audio("mp3/cuteSound.mp3");
+        cuteSound.loop = true; // loop audio
+
+        overlay.appendChild(cuteImage);
+
+        cuteSound.play();
+
+        document.body.appendChild(overlay);
+    }, 5000); // 20 seconds in is 20000
+});
