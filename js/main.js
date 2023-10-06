@@ -8,6 +8,15 @@ const WINNING_COMBINATIONS = [
     [0, 4, 8], [2, 4, 6] // Diagonals
 ];
 
+const scoreHistory = {
+    X: 0,
+    O: 0,
+}; // Score history object
+
+const scoreHistoryContainer = document.createElement("div");
+scoreHistoryContainer.classList.add("score-history-container");
+gameContainer.appendChild(scoreHistoryContainer);
+
 // Game state
 let board = Array(BOARD_SIZE ** 2).fill(" ") // Initialize empty board with 3^2 cells
 let currentPlayer = "X"; // X represents user symbol - always start with user move
@@ -31,12 +40,14 @@ function handleTileClick(index) {
     board[index] = currentPlayer; // place current player's symbol on the clicked index tile
     if (checkWin(currentPlayer)) {
         gameEnded = true; // game is over because someone has won
+        scoreHistory[currentPlayer]++ // increment score by 1 for winning player
         displayResult(`${currentPlayer} wins!`);
     } else if (checkTie()) {
         gameEnded = true; // game is over in a tie because there are no moves
         displayResult("It's a tie!");
     } else {
         currentPlayer = currentPlayer === "X" ? "O" : "X"; //switch symbol for next player turn
+        displayResult(`It's ${currentPlayer}'s turn.`);
     }
     saveGameToLocalStorage();
     renderBoard(); // update the game board
@@ -44,7 +55,7 @@ function handleTileClick(index) {
 
 // Function to display game result
 function displayResult(message) {
-    const messageElement = gameContainer.querySelector(".message");
+    const messageElement = document.querySelector(".message");
   
     // if messageBox doesn't exist create one
     if (!messageElement) {
@@ -53,16 +64,19 @@ function displayResult(message) {
         gameContainer.appendChild(newMessageElement);
         messageElement = newMessageElement;
     }
-    // update existing message in messageBox
-    messageElement.textContent = message;
 
-    // make messageBox stay when game is over
-    if (message === "It's a tie!") {
-        messageElement.textContent = message;
+    if (!gameEnded) {
+        if (message === "It's a tie!") {
+            messageElement.textContent = message;
+        } else if (message.includes("wins")) {
+            messageElement.textContent = message;
+        } else {
+            messageElement.textContent = `It's ${currentPlayer}'s turn.`;
+        }
     } else {
-        messageElement.textContent = `Winner: ${message}`;
+        // replace who's turn it is with the winning message
+        messageElement.textContent = message;
     }
-    
     gameContainer.appendChild(messageElement);
 }
 
@@ -91,10 +105,11 @@ function renderBoard(){
             row.appendChild(col);
         }
         boardElement.appendChild(row);
-            
     }
 
     gameContainer.appendChild(boardElement);
+
+    updateScoreHistory();
 }
 
 function saveGameToLocalStorage(){
@@ -135,5 +150,49 @@ function restartGame() {
     renderBoard();
 }
 
-//render board for the first time
+
+// Function to create reset button
+function createResetButton(){
+    const resetButton = document.createElement("button");
+    resetButton.id = "resetButton";
+    resetButton.textContent = "Reset Game";
+    resetButton.classList.add("btn","btn-primary");
+    // event listener for click
+    resetButton.addEventListener("click",restartGame);
+    // append the reset button to game container
+    gameContainer.appendChild(resetButton);
+}
+
+// call function to create and append reset button
+createResetButton();
+
+// render board for the first time
 renderBoard();
+
+// Function to update and display the score history
+function updateScoreHistory() {
+
+    // create the score element
+    const scoreHistoryElement = document.createElement("div");
+    scoreHistoryElement.classList.add("score-history");
+    scoreHistoryElement.textContent = `X Wins: ${scoreHistory.X} | O Wins: ${scoreHistory.O}`;
+    scoreHistoryContainer.innerHTML = " "; // clears container before adding new score history
+    scoreHistoryContainer.appendChild(scoreHistoryElement);
+
+    // create the clear score history button
+    const clearScoreButton = document.createElement("button");
+    clearScoreButton.textContent = "Clear Score History";
+    clearScoreButton.classList.add("btn", "btn-primary", "btn-clear-score");
+    clearScoreButton.addEventListener("click",()=>{
+        scoreHistory.X = 0;
+        scoreHistory.O = 0;
+        updateScoreHistory();
+    });
+    scoreHistoryElement.appendChild(clearScoreButton);
+
+}
+
+// initialize score history box
+updateScoreHistory();
+
+displayResult(`It's ${currentPlayer}'s turn.`);
