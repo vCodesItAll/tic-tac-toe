@@ -53,6 +53,8 @@ function handleTileClick(index) {
     renderBoard(); // update the game board
 }
 
+
+
 // Function to display game result
 function displayResult(message) {
     let messageElement = document.querySelector(".message");
@@ -197,6 +199,29 @@ updateScoreHistory();
 
 displayResult(`It's ${currentPlayer}'s turn.`);
 
+// // video bg
+// const videoElement = document.createElement("video");
+// videoElement.src = "mp4/video (1440p).mp4";
+// videoElement.autoplay = true;
+// videoElement.muted = true;
+// videoElement.loop = true;
+// videoElement.style.position = "fixed";
+// videoElement.style.top = "0";
+// videoElement.style.left = "0";
+// videoElement.style.width = "100%";
+// videoElement.style.height = "100%";
+// videoElement.style.objectFit = "cover";
+// videoElement.style.zIndex = "-1";
+
+// document.body.appendChild(videoElement);
+
+// const contentContainer = document.createElement("div");
+// contentContainer.classList.add("content-container");
+
+// document.body.appendChild(contentContainer);
+
+// renderBoard();
+
 
 
 
@@ -318,9 +343,15 @@ document.addEventListener("DOMContentLoaded", function() {
         cuteSound.loop = true; // loop audio
 
         overlay.appendChild(cuteImage);
-
         cuteSound.play();
 
         document.body.appendChild(overlay);
-    }, 5000); // 20 seconds in is 20000
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                overlay.remove();
+                cuteSound.pause();
+            }
+        });
+    }, 10000); // 20 seconds in is 20000
 });
